@@ -1,1 +1,1 @@
-## Three Node Kubernetes Cluster using Vagrant and Ansible
+# Three-Node Kubernetes Cluster using Vagrant VMs and Ansible Provisioning
