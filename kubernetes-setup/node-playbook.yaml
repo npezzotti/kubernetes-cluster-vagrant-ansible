@@ -77,8 +77,6 @@
       name: kubelet
       daemon_reload: yes
       state: restarted
-  - name: Initialize the Kubernetes cluster with kubeadm
-    command: kubeadm init --apiserver-advertise-address="10.0.0.10" --apiserver-cert-extra-sans="10.0.0.10" --node-name master --pod-network-cidr=10.0.0.0/16
   - name: Copy the join command to server location
     copy: src=join-command dest=/tmp/join-command.sh mode=0777
   - name: Join the node to cluster

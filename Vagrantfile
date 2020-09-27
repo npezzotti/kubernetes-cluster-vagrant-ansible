@@ -15,15 +15,13 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
+  
   config.vm.define "master", primary: true do |master|
     master.vm.box = BOX_IMAGE
     master.vm.hostname = "master"
     master.vm.network :private_network, ip: "10.0.0.10", hostname: true
-    config.vm.provision "ansible" do |ansible|
+    master.vm.provision "ansible" do |ansible|
       ansible.playbook = "kubernetes-setup/master-playbook.yaml"
-      ansible.extra_vars = {
-        node_ip: "10.0.0.10",
-      }
     end
     config.vm.provider "virtualbox" do |v|
       v.memory = 1024
@@ -38,9 +36,6 @@ Vagrant.configure("2") do |config|
       worker.vm.network :private_network, ip: "10.0.0.#{i + 10}", hostname: true
       worker.vm.provision "ansible" do |ansible|
         ansible.playbook = "kubernetes-setup/node-playbook.yaml"
-        ansible.extra_vars = {
-          node_ip: "10.0.0.#{i + 10}",
-        }
       end
       config.vm.provider "virtualbox" do |v|
         v.memory = 1024
