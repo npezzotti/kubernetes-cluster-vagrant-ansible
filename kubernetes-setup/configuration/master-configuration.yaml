@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Pull Kubeadm images to verify connection to registry
+    command: kubeadm config images pull
+  - name: Initialize the Kubernetes cluster with kubeadm
+    command:  
+  - name: Setup kubeconfig for vagrant user
+    shell: |
+      mkdir -p $HOME/.kube
+      sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
+      sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  - name: Install Flannel
+    command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  - name: Generate join command
+    command: kubeadm token create --print-join-command
+    register: join_command
+  - name: Copy join command to local file
+    become: false
+    local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"

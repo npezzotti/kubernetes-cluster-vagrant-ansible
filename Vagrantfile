@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     master.vm.provision "ansible" do |ansible|
       ansible.playbook = "kubernetes-setup/master-playbook.yaml"
     end
-    config.vm.provider "virtualbox" do |v|
+    master.vm.provider "virtualbox" do |v|
       v.memory = 1024
       v.cpus = 2
     end
@@ -37,9 +37,9 @@ Vagrant.configure("2") do |config|
       worker.vm.provision "ansible" do |ansible|
         ansible.playbook = "kubernetes-setup/node-playbook.yaml"
       end
-      config.vm.provider "virtualbox" do |v|
+      worker.vm.provider "virtualbox" do |v|
         v.memory = 1024
-        v.cpus = 2
+        v.cpus = 1
       end
     end
   end
