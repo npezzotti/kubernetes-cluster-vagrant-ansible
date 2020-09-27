@@ -1,0 +1,1 @@
+kubeadm join 10.0.0.10:6443 --token sqlqxj.070sh62s36ikxkg4     --discovery-token-ca-cert-hash sha256:d050de2fe7ac62f8b1814021c71dae8bd73e287dc59663f9d7277e0a3cd1a336 
