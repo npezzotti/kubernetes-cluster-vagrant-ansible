@@ -5,12 +5,20 @@
   - name: Pull Kubeadm images to verify connection to registry
     command: kubeadm config images pull
   - name: Initialize the Kubernetes cluster with kubeadm
-    command:  
-  - name: Setup kubeconfig for vagrant user
-    shell: |
-      mkdir -p $HOME/.kube
-      sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
-      sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+  - name: create .kube directory
+    become: yes
+    become_user: vagrant
+    file:
+      path: $HOME/.kube
+      state: directory
+      mode: 0755
+  - name: copy admin.conf to user's kube config
+    copy:
+      src: /etc/kubernetes/admin.conf
+      dest: /home/vagrant/.kube/config
+      remote_src: yes
+      owner: vagrant
   - name: Install Flannel
     command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   - name: Generate join command
