@@ -4,4 +4,4 @@
 2. run `vagrant up`
 3. run `vagrant ssh` to enter master node
 
-Starts one master node with a configurable number of workers (`N` in `Vagrantfile`)
+Starts one master node with a configurable number of workers (`NODE_COUNT` in `Vagrantfile`)
