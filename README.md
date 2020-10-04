@@ -1,4 +1,4 @@
-# Three Node Kubernetes Cluster using Vagrant VMs and Ansible Provisioning
+# Multi-node Kubernetes Cluster using Vagrant VMs and Ansible Provisioning
 
 1. Clone this repo
 2. run `vagrant up`
