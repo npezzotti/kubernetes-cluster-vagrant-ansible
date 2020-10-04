@@ -5,7 +5,7 @@
   - name: Pull Kubeadm images to verify connection to registry
     command: kubeadm config images pull
   - name: Initialize the Kubernetes cluster with kubeadm
-    shell: kubeadm init --apiserver-advertise-address="10.0.0.10" --apiserver-cert-extra-sans="10.0.0.10" --node-name master --pod-network-cidr=10.244.0.0/16
+    shell: kubeadm init --apiserver-advertise-address="10.0.0.10" --apiserver-cert-extra-sans="10.0.0.10" --node-name master --pod-network-cidr=192.168.0.0/16
   - name: create .kube directory
     become: yes
     become_user: vagrant
@@ -19,10 +19,14 @@
       dest: /home/vagrant/.kube/config
       remote_src: yes
       owner: vagrant
-  - name: Install Flannel
+  - name: Install Tigera Operator
     become: yes
     become_user: vagrant
-    command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+    command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+  - name: Install Calico CNI
+    become: yes
+    become_user: vagrant
+    command: kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
   - name: Generate join command
     command: kubeadm token create --print-join-command
     register: join_command
