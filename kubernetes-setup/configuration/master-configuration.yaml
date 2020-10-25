@@ -5,7 +5,7 @@
   - name: Pull Kubeadm images to verify connection to registry
     command: kubeadm config images pull
   - name: Initialize the Kubernetes cluster with kubeadm
-    shell: kubeadm init --apiserver-advertise-address="10.0.0.10" --apiserver-cert-extra-sans="10.0.0.10" --pod-network-cidr=192.168.0.0/16
+    shell: kubeadm init --apiserver-advertise-address="10.0.0.10" --apiserver-cert-extra-sans="10.0.0.10" --node-name="master" --pod-network-cidr=192.168.0.0/16
   - name: create .kube directory
     become: yes
     become_user: vagrant
