@@ -38,6 +38,11 @@
       - containerd.io
     notify:
       - docker status
+  - name: Remove config.toml
+    # https://github.com/containerd/containerd/issues/4581
+    ansible.builtin.file:
+      path: /etc/containerd/config.toml
+      state: absent
   - name: Add vagrant user to docker group
     user:
       name: vagrant
