@@ -43,6 +43,10 @@
     ansible.builtin.file:
       path: /etc/containerd/config.toml
       state: absent
+  - name: Restart containerd
+    ansible.builtin.service:
+      name: containerd
+      state: restarted
   - name: Add vagrant user to docker group
     user:
       name: vagrant
